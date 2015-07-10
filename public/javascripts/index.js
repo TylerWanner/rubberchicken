@@ -25,5 +25,7 @@ $(document).ready( function(){
 		]
 	};
 	var ctx = document.getElementById("indexChart").getContext("2d");
-	var myLineChart = new Chart(ctx).Line(data);
+	var myLineChart = new Chart(ctx).Line(data, {
+		responsive:true		
+	});
 });
