@@ -19,6 +19,7 @@ resolvers += "tomax repository" at "http://maven.tmx.com/nexus"
 resolvers += "ghost4j repository" at "http://maven.newcorp.com/nexus/content/repositories/ghost4j-releases/"
 
 resolvers += "jai repository" at "http://dl.bintray.com/jai-imageio/maven/"
+
 resolvers += "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
 
 resolvers += Classpaths.typesafeResolver
