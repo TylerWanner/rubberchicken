@@ -1,6 +1,6 @@
 $(document).ready( function(){ 
 	var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["2010", "2011", "2012", "2013", "2014"],
     datasets: [
         {
             label: "My First dataset",
@@ -8,7 +8,7 @@ $(document).ready( function(){
             strokeColor: "rgba(220,220,220,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
+            data: [65, 68, 75, 85, 80]
         },
         {
             label: "My Second dataset",
@@ -16,13 +16,13 @@ $(document).ready( function(){
             strokeColor: "rgba(151,187,205,0.8)",
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 90]
+            data: [50, 60, 72, 72, 85]
         }
 		]
 	};
 	var ctx = document.getElementById("compareChart").getContext("2d");
-	var barChart = new Chart(ctx).Bar(data, {
-		responsive:true		
+	var barChart = new Chart(ctx).Line(data, {
+		responsive:true	
 	});
 	
 	var data2 =[ {
@@ -47,5 +47,27 @@ $(document).ready( function(){
 	var pieChart = new Chart(ctx2).Doughnut(data2, {
 		responsive:true		
 	});
-	$( '#compareChartSkillsLegend' ).html( pieChart.generateLegend() );
+	
+	var data3 =[ {
+        value: 100,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Interpersonal"
+    },
+    {
+        value: 120,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Technical"
+    },
+    {
+        value: 140,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: "Management"
+    }];
+	var ctx3 = document.getElementById("compareChartSkills2").getContext("2d");
+	var pieChart2 = new Chart(ctx3).Doughnut(data3, {
+		responsive:true		
+	});
 });
