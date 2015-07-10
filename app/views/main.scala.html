@@ -8,15 +8,15 @@
         <title>@title - PROGREDI: The advancement tool to end all advancement tools</title>
         <meta name="description" content="@desc">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+		<link href='http://fonts.googleapis.com/css?family=Bitter' rel='dns-prefetch stylesheet' type='text/css'>
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
-        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
-		<script src="@routes.Assets.versioned("javascripts//jquery-1.9.0.min.js")"></script>
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.less")">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="@routes.Assets.versioned("javascripts//bootstrap.min.js")"></script>
     </head>
     <body>
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid">
+		<nav class="navbar navbar-default primary-nav">
+		  <div class="container">
 			<div class="navbar-header">
 			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-navbar-collapse" aria-expanded="false">
 				<span class="sr-only">Toggle navigation</span>
@@ -41,7 +41,23 @@
 		  </div><!-- /.container-fluid -->
 		</nav>
 		
+		<div class="content">
 		@content
+		</div>
 		
+		<footer class="primary-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-6">
+						<ul>
+							<li><a href="">Go!</a></li>
+						</ul>
+					</div>
+					<div classs="col-xs-6">
+						<p>&copy; 2015 Clayton Huthwaite and Tashdid Khan. All rights reserved.</p>
+					</div>
+				</div>
+			</div>
+		</footer>
     </body>
 </html>
