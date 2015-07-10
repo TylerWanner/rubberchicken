@@ -43,7 +43,7 @@ object ApplicationBuild extends Build {
 
   lazy val s = Seq(
     organization := appOrganization,
-    version := appVersion,
+    version := appVersion,    
     scalaVersion := scalaLangVersion,
     incOptions := incOptions.value.withNameHashing(true),
     resolvers ++= Seq(
