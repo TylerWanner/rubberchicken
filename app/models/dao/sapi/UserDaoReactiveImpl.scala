@@ -61,7 +61,7 @@ trait UserDaoReactive {
 
 }
 
-class UserDaoReactiveImpl {
+object UserDaoReactiveImpl {
   val conf = Play.configuration
   val DB_NAME = "db"
   val userCollectionNameString: String = "users"
@@ -110,7 +110,6 @@ class UserDaoReactiveImpl {
   def db = ReactiveMongoPlayPlugin.db
   def collection = db.collection[JSONCollection](userCollectionNameString)
 
-
   def getUserById(vendor: String, id: String): Future[Option[User]] = {
     val query: Query = new Query
     val orDquery: Query = new Query
@@ -143,6 +142,22 @@ class UserDaoReactiveImpl {
         None
     }
 
+  }
+
+  def getUserByQueryString(queryString: Map[String, Seq[String]]): Future[List[User]] = {
+    val query: Query = new Query
+    queryString.map {case (k,v) =>
+      val criteria: Criteria = Criteria.where(k).in(v)
+      query.addCriteria(criteria)
+    }
+    collection.find(Json.parse(serializeToJsonSafely(query.getQueryObject))).cursor[JsValue].collect[List]().map {
+      result =>
+        result.map(user => userDao.fromInstanceDBObject(MongoJson.fromJson(user), classOf[User]))
+    } recover {
+      case e: Exception =>
+        Logger.error(s"Error fetching user with name $query from mongo", e)
+        List.empty[User]
+    }
   }
 
   def getUserByName(name: String): Future[Option[User]] = {
