@@ -62,4 +62,23 @@ object UserAPI extends Controller {
 
   }
 
+  def updateUser(id: String) = Action.async {
+    implicit request =>
+      request.contentType match {
+        case Some("application/json") if request.body.asJson.isDefined =>
+          client.getUserById("",id).flatMap {
+            case Some(user) =>
+              client.updateUser(Json.fromJson[User](request.body.asJson.get).getOrElse(throw new IllegalArgumentException("UnsupportedMediaType"))).map{ error =>
+                if(error.ok)Ok(Json.toJson(user)).as("application/json")
+                else InternalServerError(error.stringify)
+              }
+            case _ => Future.successful(NotFound)
+          } recover {
+            case _ => NotFound
+          }
+
+        case _ => Future.successful(UnsupportedMediaType)
+      }
+  }
+
 }
