@@ -3,17 +3,23 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index
-GET         /review360           controllers.Application.review360
-GET         /evaluation          controllers.Application.evaluation
-GET         /compare             controllers.Application.compare
+GET         /                                                          controllers.Application.index
+GET         /review360                                                 controllers.Application.review360
+GET         /evaluation                                                controllers.Application.evaluation
+GET         /compare                                                   controllers.Application.compare
 
 
 
-GET         /user/:id            controllers.UserAPI.getUser(id)
-GET         /user                controllers.UserAPI.query()
-POST        /user                controllers.UserAPI.createUser()
-PUT         /user/:id            controllers.UserAPI.updateUser(id)
+GET         /user/:id                                                  controllers.UserAPI.getUser(id)
+GET         /user                                                      controllers.UserAPI.query()
+POST        /user                                                      controllers.UserAPI.createUser()
+PUT         /user/:id                                                  controllers.UserAPI.updateUser(id)
+
+GET         /survey/list                                               controllers.SurveyAPI.list()
+GET         /survey                                                    controllers.SurveyAPI.query()
+GET         /survey/:id/user/:userId                                   controllers.SurveyAPI.getSurvey(id,userId)
+PUT         /user/:userid/survey/:surveyid/lineitem/:lineItemId        controllers.SurveyAPI.updateSurveyEntryForUser(userid: String, surveyid: String,lineItemId :String)
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                                              controllers.Assets.versioned(path="/public", file: Asset)
