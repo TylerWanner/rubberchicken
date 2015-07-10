@@ -1,9 +1,16 @@
-import com.typesafe.sbt.less.Import.LessKeys
-import com.typesafe.sbt.web.Import._
 import sbt.Keys._
 import sbt._
 import com.typesafe.sbt.SbtNativePackager._
-
+import com.typesafe.config.ConfigFactory
+import com.typesafe.sbt.less.Import.LessKeys
+import play.twirl.sbt.Import.TwirlKeys
+import sbt._
+import Keys._
+import com.typesafe.sbt.web.Import._
+import com.typesafe.sbt.digest.Import._
+import com.typesafe.sbt.gzip.Import._
+import com.typesafe.sbt.SbtNativePackager._
+import play.Play.autoImport._
 
 object ApplicationBuild extends Build {
 
@@ -43,7 +50,7 @@ object ApplicationBuild extends Build {
 
   lazy val s = Seq(
     organization := appOrganization,
-    version := appVersion,    
+    version := appVersion,
     scalaVersion := scalaLangVersion,
     incOptions := incOptions.value.withNameHashing(true),
     resolvers ++= Seq(
