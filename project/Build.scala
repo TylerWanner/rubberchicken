@@ -1,3 +1,5 @@
+import com.typesafe.sbt.less.Import.LessKeys
+import com.typesafe.sbt.web.Import._
 import sbt.Keys._
 import sbt._
 import com.typesafe.sbt.SbtNativePackager._
@@ -52,6 +54,9 @@ object ApplicationBuild extends Build {
       "Mirror" at "http://mirrors.ibiblio.org/pub/mirrors/maven2/",
       "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases"
     ),
+    includeFilter in (Assets,LessKeys.less) := "*.less",
+    includeFilter in digest := "*.css" || "*.js",
+    includeFilter in gzip := "*.html" || "*.js" || "*.css",
     libraryDependencies ++= appDependencies,
     publish <<= publish dependsOn dist,
     crossPaths := false,
