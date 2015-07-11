@@ -20,6 +20,10 @@ GET         /survey                                                    controlle
 GET         /survey/:id/user/:userId                                   controllers.SurveyAPI.getSurvey(id,userId)
 PUT         /user/:userid/survey/:surveyid/lineitem/:lineItemId        controllers.SurveyAPI.updateSurveyEntryForUser(userid: String, surveyid: String,lineItemId :String)
 
+GET         /results/user/:userId                                      controllers.ResultsAPI.getSurveyResults(userId)
+
+POST        /education/user/:userId                                    controllers.SurveyAPI.addEducation(userId)
+POST        /experiences/user/:userId                                  controllers.SurveyAPI.addExperience(userId)
 
 
 # Map static resources from the /public folder to the /assets URL path

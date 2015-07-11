@@ -3,12 +3,14 @@ package models.dao.sapi
 import java.io.{StringWriter, Serializable}
 import java.security.NoSuchAlgorithmException
 import java.security.spec.InvalidKeySpecException
+import java.util
 import java.util._
 
 import org.apache.commons.lang3.StringUtils
 import org.codehaus.jackson.map.DeserializationConfig
 import org.codehaus.jackson.map.ObjectMapper
 import play.Logger
+import scala.collection.JavaConverters._
 
 object AbstractModel {
   /**
@@ -152,6 +154,19 @@ object User {
 }
 
 class User extends AbstractModel {
+  def withExperience(expr: Option[Experience]) = {
+    expr match{
+      case Some(e)=> experiences.add(e);skills.addAll(e.skillsUsed.asJava); awards.addAll(e.awardswon.asJava);sources.addAll(e.sourcesReferenced.asJava);this
+      case None => this
+    }
+  }
+  def withEducation(expr: Option[Education]) = {
+    expr match{
+      case Some(e)=> education.add(e);skills.addAll(e.skillslearned.asJava); awards.addAll(e.awardswon.asJava);sources.addAll(e.sourcesReferenced.asJava);this
+      case None => this
+    }
+  }
+
   var id: String = StringUtils.EMPTY
   var userId: String = StringUtils.EMPTY
   var partyId: String = StringUtils.EMPTY
@@ -172,6 +187,12 @@ class User extends AbstractModel {
   var hasBadDemographics: Boolean = false
   var contactConsent: Boolean = false
   var coached: Boolean = false
+
+  var skills: List[Skill] = new util.ArrayList[Skill]()
+  var sources: List[ExternalSource] = new util.ArrayList[ExternalSource]()
+  var awards: List[Award] = new util.ArrayList[Award]()
+  var education: List[Education] = new util.ArrayList[Education]()
+  var experiences: List[Experience]= new util.ArrayList[Experience]()
 
   def withUserId(userId: String, vendor: String): User = {
     this.userId = userId

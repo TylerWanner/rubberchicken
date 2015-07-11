@@ -1,7 +1,6 @@
 package controllers
 
-import controllers.UserAPI._
-import models.dao.sapi._
+import models.dao.sapi.{AbstractModel, Survey, SurveyReactiveImpl, UserDaoReactiveImpl}
 import play.api.Play
 import play.api.Play.current
 import play.api.libs.json._
@@ -10,17 +9,51 @@ import services.SurveyServices
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.collection.JavaConverters._
 import models.dao.sapi.Implicits._
 
 /**
  * Created by tashdid.khan on 7/10/2015.
  */
-object SurveyAPI extends Controller {
+object ResultsAPI extends Controller {
   val serveyclient = SurveyReactiveImpl
   val userclient = UserDaoReactiveImpl
 
   val surveys = SurveyServices.getServey(Play.configuration)
+
+
+
+  implicit val implicitsurveyWrites = new Writes[Survey] {
+    def writes(bar: Survey): JsValue = {
+      Json.parse(bar.toJson)
+    }
+  }
+  implicit val implicitsurveyReads = new Reads[Survey] {
+    def reads(json: JsValue): JsResult[Survey] = {
+      try{
+        JsSuccess(AbstractModel.fromJson(Json.stringify(json),classOf[Survey]).getOrElse(throw new IllegalArgumentException("unable to read Survey")))
+      }catch {
+          case e :Throwable => JsError()
+        }
+    }
+  }
+
+
+  def getSurveyResults( userId: String) = Action.async {
+    implicit request =>
+      serveyclient.getSurveyByQueryString(Map[String,Seq[String]]("targetedUser.id" -> List(userId)) ).map {
+        case survey =>
+//         val result = survey.asInstanceOf[List[Survey]].map{ case s =>
+//            s.lineItems.map{ case (k,v) =>
+//              (k,v.map(_.score).reduce{case (x,y)=>x+y})
+//            }
+//          }
+          Ok(Json.toJson(survey)).as("application/json")
+      } recover {
+        case _ => NotFound
+      }
+
+  }
+
 
   def list() = Action{
     Ok(Json.toJson(surveys)).as("application/json")
@@ -76,37 +109,5 @@ object SurveyAPI extends Controller {
     val lineItem = lineItemMap.getOrElse(throw new IllegalArgumentException)._2.find(_.id == lineItemId).getOrElse(throw new IllegalArgumentException)
     val lineItemMapList = lineItemMap.get._2.filterNot(_.id == lineItemId).::(lineItem.copy(score = score))
     survey.copy(lineItems = survey.lineItems.+(lineItemMap.get.copy(_2 = lineItemMapList)))
-  }
-
-  def addExperience(userId: String)= Action.async {
-    implicit request =>
-      request.contentType match {
-        case Some("application/json") if request.body.asJson.isDefined =>
-          val expr = request.body.asJson.get.asOpt[Experience]
-          userclient.getUserById("",userId).flatMap {
-            case Some(user) =>
-             val modifiedUser = user.withExperience(expr)
-              userclient.updateUser(modifiedUser).map{case error =>
-                if(error.ok)Ok(Json.toJson(modifiedUser)).as("application/json")
-                else InternalServerError(error.stringify)
-              }
-          }
-      }
-  }
-
-  def addEducation(userId: String)= Action.async {
-    implicit request =>
-      request.contentType match {
-        case Some("application/json") if request.body.asJson.isDefined =>
-          val expr = request.body.asJson.get.asOpt[Education]
-          userclient.getUserById("",userId).flatMap {
-            case Some(user) =>
-              val modifiedUser = user.withEducation(expr)
-              userclient.updateUser(modifiedUser).map{case error =>
-                if(error.ok)Ok(Json.toJson(modifiedUser)).as("application/json")
-                else InternalServerError(error.stringify)
-              }
-          }
-      }
   }
 }
