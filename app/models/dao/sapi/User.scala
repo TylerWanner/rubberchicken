@@ -48,34 +48,14 @@ object AbstractModel {
   }
 }
 
-abstract class AbstractModel extends Serializable {
-  protected var createdDate: Date = null
-  protected var lastUpdatedDate: Date = null
+case class AbstractModel( createdDate: Date = null, lastUpdatedDate: Date = null) extends Serializable {
 
   def withCreatedDate(createdDate: Date): AbstractModel = {
-    this.createdDate = createdDate
-    return this
+    this.copy(createdDate = createdDate)
   }
 
   def withLastUpdatedDate(lastUpdatedDate: Date): AbstractModel = {
-    this.lastUpdatedDate = lastUpdatedDate
-    return this
-  }
-
-  def getCreatedDate: Date = {
-    return createdDate
-  }
-
-  def setCreatedDate(createdDate: Date) {
-    this.createdDate = createdDate
-  }
-
-  def getLastUpdatedDate: Date = {
-    return lastUpdatedDate
-  }
-
-  def setLastUpdatedDate(lastUpdatedDate: Date) {
-    this.lastUpdatedDate = lastUpdatedDate
+    this.copy(lastUpdatedDate = lastUpdatedDate)
   }
 
   /**
@@ -109,18 +89,14 @@ abstract class AbstractModel extends Serializable {
 object User {
 
   @SerialVersionUID(1L)
-  class UserPreferences extends Serializable {
-    var language: String = null
-    var emailOptIn: Boolean = false
+  case class UserPreferences(language: String = null, emailOptIn: Boolean = false) extends Serializable {
 
     def withLanguage(language: String): User.UserPreferences = {
-      this.language = language
-      return this
+      this.copy(language = language)
     }
 
     def withEmailOptIn(emailOptIn: Boolean): User.UserPreferences = {
-      this.emailOptIn = emailOptIn
-      return this
+      this.copy(emailOptIn = emailOptIn)
     }
   }
 
