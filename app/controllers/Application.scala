@@ -20,5 +20,9 @@ object Application extends Controller {
   def evaluation = Action {
     Ok( views.html.evaluation() )
   }
+  
+  def dashboard = Action {
+    Ok( views.html.dashboard() )
+  }
 
 }
