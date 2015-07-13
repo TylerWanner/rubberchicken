@@ -27,19 +27,19 @@ $(document).ready( function(){
 	
 	var data2 =[ {
         value: 300,
-        color:"#F7464A",
+        color:"#dd0000",
         highlight: "#FF5A5E",
         label: "Interpersonal"
     },
     {
         value: 50,
-        color: "#46BFBD",
+        color: "#008000",
         highlight: "#5AD3D1",
         label: "Technical"
     },
     {
         value: 100,
-        color: "#FDB45C",
+        color: "#FFD500",
         highlight: "#FFC870",
         label: "Management"
     }];
@@ -50,19 +50,19 @@ $(document).ready( function(){
 	
 	var data3 =[ {
         value: 100,
-        color:"#F7464A",
+        color:"#dd0000",
         highlight: "#FF5A5E",
         label: "Interpersonal"
     },
     {
         value: 120,
-        color: "#46BFBD",
+        color: "#008000",
         highlight: "#5AD3D1",
         label: "Technical"
     },
     {
         value: 140,
-        color: "#FDB45C",
+        color: "#FFD500",
         highlight: "#FFC870",
         label: "Management"
     }];
