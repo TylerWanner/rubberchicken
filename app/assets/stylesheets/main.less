@@ -78,11 +78,28 @@ p {
 .callout {
 	padding: 55px 0 80px;
 	
+	&.callout--main:before {
+		background-color: rgba(0, 0, 0, 0.3);
+		content: "";
+		display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
 	&.callout--main, &.callout--get-started, &.callout--title {
 		color: #fff;
 		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 		background-image: -webkit-linear-gradient(#202D5F, #614381);
-		background-image: linear-gradient(#202D5F, #614381);	
+		background-image: linear-gradient(#202D5F, #614381);
+		background-image: url('lake.jpg');
+		background-size: cover;
+		background-position: center center;
+		position:relative;
 	
 		canvas {
 			background-color:#fff;
