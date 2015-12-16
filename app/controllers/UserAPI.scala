@@ -1,20 +1,17 @@
 package controllers
 
 import models.dao.sapi.{AbstractModel, User, UserDaoReactiveImpl}
-import play.api._
-import play.api.mvc._
 import play.api.libs.json._
+import play.api.mvc._
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 /**
  * Created by tashdid.khan on 7/10/2015.
  */
 object UserAPI extends Controller {
   val client = UserDaoReactiveImpl
-
-
   implicit val implicitBarWrites = new Writes[User] {
     def writes(bar: User): JsValue = {
       Json.parse(bar.toJson)
